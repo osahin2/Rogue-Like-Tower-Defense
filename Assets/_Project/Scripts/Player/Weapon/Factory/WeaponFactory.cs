@@ -5,9 +5,11 @@ namespace Player.Weapons
 {
     public class WeaponFactory : MonoBehaviour, IWeaponFactory
     {
-        [SerializeField] private List<WeaponSettings> _weapons = new();
+        [SerializeField] private List<WeaponConfig> _weapons = new();
 
-        private readonly Dictionary<WeaponType, WeaponSettings> _weaponsMap = new();
+        private readonly Dictionary<WeaponType, WeaponConfig> _weaponsMap = new();
+
+        private Weapon _weapon;
         public void Init()
         {
             SetDictionary();
@@ -20,14 +22,14 @@ namespace Player.Weapons
                 _weaponsMap.Add(weapon.WeaponType, weapon);
             }
         }
-        public IWeapon CreateWeapon(WeaponType type)
+        public IWeapon CreateWeapon(WeaponType type, Transform parent)
         {
-            var weaponSettings = GetWeaponSettings(type);
-            var weapon = Instantiate(weaponSettings.WeaponPrefab);
-            return weapon;
+            var weaponSettings = GetWeaponSetting(type);
+            _weapon = Instantiate(weaponSettings.WeaponPrefab, parent);
+            _weapon.Init(weaponSettings);
+            return _weapon;
         }
-
-        private WeaponSettings GetWeaponSettings(WeaponType type)
+        private WeaponConfig GetWeaponSetting(WeaponType type)
         {
             if (_weaponsMap.TryGetValue(type, out var weapon))
             {

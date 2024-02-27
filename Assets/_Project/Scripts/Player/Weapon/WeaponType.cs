@@ -1,5 +1,8 @@
-﻿namespace Player.Weapons
+﻿using System;
+
+namespace Player.Weapons
 {
+    [Serializable]
     public enum WeaponType
     {
         Pistol,

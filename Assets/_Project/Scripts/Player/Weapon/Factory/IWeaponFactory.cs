@@ -1,8 +1,10 @@
-﻿namespace Player.Weapons
+﻿using UnityEngine;
+
+namespace Player.Weapons
 {
     public interface IWeaponFactory
     {
-        IWeapon CreateWeapon(WeaponType type);
+        IWeapon CreateWeapon(WeaponType type, Transform parent);
     }
 
 }
