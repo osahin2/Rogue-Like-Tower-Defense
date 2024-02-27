@@ -1,37 +1,14 @@
 using Rogue_Enemy;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Rogue_LevelData
 {
-    [Serializable]
-    public struct LevelData
-    {
-        [HideInInspector] public int Level;
-        public List<WaveData> Waves;
-        public float WaveDuration { get; set; }
-    }
-    [Serializable]
-    public struct WaveData
-    {
-        public List<WaveEnemyData> WaveEnemies;
-    }
-    [Serializable]
-    public struct WaveEnemyData
-    {
-        public EnemyType EnemyType;
-        public int TotalCount;
-        public int SpawnedEnemy { get; set; }
-        public float SpawnInterval { get; set; }
-
-    }
-
-    [CreateAssetMenu(fileName = "LevelData", menuName ="Level/LevelData")]
+    [CreateAssetMenu(fileName = "LevelData", menuName ="Level/Level Data Container")]
     public class LevelDataContainer : ScriptableObject
     {
         [SerializeField] private MapType _mapType;
-        [SerializeField] private List<LevelData> _levelDatas = new();
+        [SerializeField] private List<LevelDataSO> _levelDatas = new();
         [SerializeField] private float _waveDuration;
 
         private readonly Dictionary<int, LevelData> _levelsMap = new();
@@ -51,7 +28,7 @@ namespace Rogue_LevelData
         {
             for (int i = 0; i < _levelDatas.Count; i++)
             {
-                var data = _levelDatas[i];
+                var data = _levelDatas[i].Data;
                 data.Level = i + 1;
                 data.WaveDuration = _waveDuration;
                 
@@ -60,7 +37,6 @@ namespace Rogue_LevelData
         }
 
     }
-
     public enum MapType
     {
         Default
