@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8561a8d66cf7655488c8a3a5617a0314, type: 3}
+  m_Name: Rifle
+  m_EditorClassIdentifier: 
+  _type: 1
+  _weaponPrefab: {fileID: 6304023304966247266, guid: 730dd80367db5f04f9d859f26a3ea518, type: 3}
+  _damageAttributes:
+    Attributes: 0f00000014000000190000001e00000023000000
+  _fireRateAttributes:
+    Attributes:
+    - 0.4
+    - 0.3
+    - 0.25
+    - 0.2
+    - 0.15
+  _rangeAttribute:
+    Attributes:
+    - 2
+    - 2.5
+    - 3
+    - 3.5
+    - 3.7

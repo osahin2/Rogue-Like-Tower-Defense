@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3c1d5c6529669645b165ae1d4dab74d, type: 3}
-  m_Name: LevelData
+  m_Name: LevelDataContainer
   m_EditorClassIdentifier: 
   _mapType: 0
   _levelDatas:
-  - Level: 0
-    Waves:
-    - WaveEnemies:
-      - EnemyType: 0
-        TotalCount: 50
+  - {fileID: 11400000, guid: c66e1776e623cca49ab396ae2abac4b2, type: 2}
   _waveDuration: 30

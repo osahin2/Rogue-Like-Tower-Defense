@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8561a8d66cf7655488c8a3a5617a0314, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  _type: 2
+  _weaponPrefab: {fileID: 4980526190483830354, guid: 8e645e6b2d8109542ab2746593b1ca11, type: 3}
+  _damageAttributes:
+    Attributes: 0300000005000000070000000a0000000f000000
+  _fireRateAttributes:
+    Attributes:
+    - 1
+    - 0.9
+    - 0.8
+    - 0.7
+    - 0.6
+  _rangeAttribute:
+    Attributes:
+    - 2
+    - 2.5
+    - 3
+    - 3.5
+    - 3.7
