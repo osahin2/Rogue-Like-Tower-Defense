@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Rogue_Enemy.Factory
 {
 
-    [CreateAssetMenu(fileName = "EnemyFactory", menuName = "Enemy Factory")]
+    [CreateAssetMenu(fileName = "EnemyFactory", menuName = "Enemy/Generic Enemy Factory")]
     public class GenericEnemyFactory : ScriptableObject, IGenericEnemyFactory
     {
         [SerializeField] private PoolItem<Enemy> _enemy;

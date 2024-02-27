@@ -44,6 +44,7 @@ namespace Rogue_Enemy
             IterateWavesAsync();
             _levelDataContainer.GetLevelData(1, out _currentLevelData);
 
+
         }
         public void Stop()
         {

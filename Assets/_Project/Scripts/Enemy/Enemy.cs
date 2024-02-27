@@ -28,7 +28,6 @@ namespace Rogue_Enemy
         public virtual void PoolOnFree()
         {
             gameObject.SetActive(false);
-            _factory.Free(this);
         }
 
         public virtual void PoolOnDestroyed()
