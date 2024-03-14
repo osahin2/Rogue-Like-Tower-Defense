@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af958835bb6408b4c884d8334c70f8f7, type: 3}
-  m_Name: EnemyFactory
+  m_Script: {fileID: 11500000, guid: a48b9c3fe41e4f8428a7a0606b283d1b, type: 3}
+  m_Name: PistolBullet
   m_EditorClassIdentifier: 
-  _enemy:
-    poolObject: {fileID: 4991950975073058301, guid: fe457ec4a69842c4d9ba30f2ad2940b5, type: 3}
+  _bulletPoolItem:
+    poolObject: {fileID: 4225228917386624527, guid: e2477bd59b4fc1d47ac5e9ab831a088c, type: 3}
     initialAmountPool: 30
+  _bulletSpeed: 500
+  _bulletDampen: 1

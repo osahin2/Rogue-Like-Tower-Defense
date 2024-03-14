@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af958835bb6408b4c884d8334c70f8f7, type: 3}
-  m_Name: EnemyFactory
+  m_Script: {fileID: 11500000, guid: ca1622e511e4ce2419d9d72e28e09402, type: 3}
+  m_Name: Inventory Weapon Item
   m_EditorClassIdentifier: 
-  _enemy:
-    poolObject: {fileID: 4991950975073058301, guid: fe457ec4a69842c4d9ba30f2ad2940b5, type: 3}
-    initialAmountPool: 30
+  <Id>k__BackingField: 3e56307e-51cc-48ae-89ad-8bc9a1608baa
+  _itemPrefab: {fileID: 0}
+  ItemType: 0
+  _weapon: {fileID: 0}

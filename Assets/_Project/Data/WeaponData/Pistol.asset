@@ -14,19 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 0
   _weaponPrefab: {fileID: -7303198734745089213, guid: ac4dd2b385a7a9c4786c8d9b4451102e, type: 3}
+  _bulletConfig: {fileID: 11400000, guid: f3273fac30f65ef489cd43e0416fb2f8, type: 2}
   _damageAttributes:
     Attributes: 050000000a0000000f0000001400000019000000
   _fireRateAttributes:
     Attributes:
-    - 1
+    - 0.5
     - 0.9
     - 0.8
     - 0.7
     - 0.6
   _rangeAttribute:
     Attributes:
-    - 2
+    - 24.16
     - 2.5
     - 3
     - 3.5
     - 3.7
+  _icon: {fileID: 0}
