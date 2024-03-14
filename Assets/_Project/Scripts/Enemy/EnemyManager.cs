@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using Inputs;
 using Player;
 using Rogue_Enemy.Factory;
 using Rogue_LevelData;
@@ -29,7 +28,7 @@ namespace Rogue_Enemy
         private List<Enemy> _enemies = new();
         private bool _isActive;
 
-        public void Init(IPlayer player)
+        public void Construct(IPlayer player)
         {
             _player = player;
 
@@ -38,30 +37,38 @@ namespace Rogue_Enemy
             _levelDataContainer.Construct();
         }
 
-        public void Run()
+        public void Init()
         {
             _isActive = true;
-            IterateWavesAsync();
             _levelDataContainer.GetLevelData(1, out _currentLevelData);
-
-
+            IterateWavesAsync();
         }
-        public void Stop()
+        public void DeInit()
         {
             _isActive = false;
         }
-        
+
         private void Update()
         {
             if (!_isActive) return;
 
             MoveEnemies();
+            AttackEnemies();
         }
         private void MoveEnemies()
         {
-            foreach (var enemy in _enemies)
+            for (int i = 0; i < _enemies.Count; i++)
             {
+                var enemy = _enemies[i];
                 enemy.Move(_player.PlayerPosition);
+            }
+        }
+        private void AttackEnemies()
+        {
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                var enemy = _enemies[i];
+                enemy.Attack();
             }
         }
         private async void IterateWavesAsync()
@@ -89,9 +96,17 @@ namespace Rogue_Enemy
             {
                 var enemy = _enemyFactory.Get(waveEnemy.EnemyType);
                 enemy.SetPosition(RandomPointOnCircleEdge());
+                enemy.OnDead += OnEnemyDead;
                 _enemies.Add(enemy);
                 await UniTask.WaitForSeconds(GetSpawnInterval(waveEnemy.TotalCount, _currentLevelData.WaveDuration));
             }
+        }
+
+        private void OnEnemyDead(Enemy enemy)
+        {
+            enemy.OnDead -= OnEnemyDead;
+            _enemies.Remove(enemy);
+            _enemyFactory.Release(enemy);
         }
         private Vector3 RandomPointOnCircleEdge()
         {

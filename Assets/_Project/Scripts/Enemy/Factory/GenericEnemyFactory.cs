@@ -17,8 +17,8 @@ namespace Rogue_Enemy.Factory
 
         public void Construct(Transform poolSpawnParent)
         {
-            _pooler = new Pooler<Enemy>(_enemy, CreateEnemy, OnGet, OnFree, OnDestroyed, OnInitialSpawned);
             _poolSpawnParent = poolSpawnParent;
+            _pooler = new Pooler<Enemy>(_enemy, CreateEnemy, OnGet, OnFree, OnDestroyed, OnInitialSpawned);
         }
         public Enemy GetEnemy()
         {
@@ -33,7 +33,7 @@ namespace Rogue_Enemy.Factory
         private Enemy CreateEnemy()
         {
             var enemy = Instantiate(Enemy, _poolSpawnParent);
-            enemy.InitFactory(this);
+            enemy.Construct();
             return enemy;
         }
 
