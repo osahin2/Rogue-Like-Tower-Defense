@@ -2,6 +2,6 @@ public interface ISModel
 {
     bool IsInitialized { get; }
 
-    void Initialize();
-    void DeInitialize();
+    void Init();
+    void DeInit();
 }

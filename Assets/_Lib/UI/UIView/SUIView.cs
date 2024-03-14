@@ -10,7 +10,7 @@ namespace Assets._Lib.UI.UIView
         public bool IsVisible {  get; private set; }
 
         #region ISView : Initialize | OnInitialized
-        public void Initialize()
+        public void Init()
         {
             if (IsInitialized)
             {
@@ -24,7 +24,7 @@ namespace Assets._Lib.UI.UIView
         #endregion ISView : Initialize | OnInitialized
 
         #region ISView : DeInitialize | OnDeInitialized
-        public void DeInitialize()
+        public void DeInit()
         {
             IsInitialized = false;
             OnDeInitialized();

@@ -4,18 +4,18 @@ public abstract class SModelSO : ScriptableObject, ISModel
 {
     public bool IsInitialized { get; private set; }
 
-    public void Initialize()
+    public void Init()
     {
         
         IsInitialized = true;
-        OnInitialized();
+        OnInit();
     }
-    protected abstract void OnInitialized();
+    protected abstract void OnInit();
 
-    public void DeInitialize()
+    public void DeInit()
     {
         IsInitialized = false;
-        OnDeInitialized();
+        OnDeInit();
     }
-    protected abstract void OnDeInitialized();
+    protected abstract void OnDeInit();
 }

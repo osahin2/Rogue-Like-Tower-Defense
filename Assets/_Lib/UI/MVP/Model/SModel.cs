@@ -2,7 +2,7 @@ public abstract class SModel : ISModel
 {
     public bool IsInitialized { get; private set; }
 
-    public void Initialize()
+    public void Init()
     {
         if (IsInitialized)
         {
@@ -10,17 +10,17 @@ public abstract class SModel : ISModel
         }
 
         IsInitialized = true;
-        OnInitialized();
+        OnInit();
     }
 
-    protected abstract void OnInitialized();
+    protected abstract void OnInit();
 
-    public void DeInitialize()
+    public void DeInit()
     {
         IsInitialized = false;
-        OnDeInitialized();
+        OnDeInit();
     }
-    protected abstract void OnDeInitialized();
+    protected abstract void OnDeInit();
 
 
 }

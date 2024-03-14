@@ -2,8 +2,8 @@ public interface ISPresenter
 {
     bool IsInitialized { get; }
 
-    void Initialize();
-    void DeInitialize();
+    void Init();
+    void DeInit();
 
     void Show();
     void Hide();

@@ -17,26 +17,32 @@ public abstract class SPresenter<TModel, TView> : ISPresenter
     #endregion Constructor
 
     #region ISPresenter : Initialize | OnInitialize
-    public void Initialize()
+    public void Init()
     {
         if (IsInitialized)
         {
             return;
         } 
         IsInitialized = true;
-        OnInitialized();
+
+        _model.Init();
+        _view.Init();
+
+        OnInit();
     }
-    protected abstract void OnInitialized();
+    protected abstract void OnInit();
 
     #endregion ISPresenter : Initialize | OnInitialize
 
     #region ISPresenter : DeInitialize | OnDeInitialize
-    public void DeInitialize()
+    public void DeInit()
     {
         IsInitialized = false;
-        OnDeInitialized();
+        _model.DeInit();
+        _view.DeInit();
+        OnDeInit();
     }
-    protected abstract void OnDeInitialized();
+    protected abstract void OnDeInit();
 
     #endregion ISPresenter : DeInitialize | OnDeInitialize
 

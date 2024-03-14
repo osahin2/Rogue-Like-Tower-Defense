@@ -9,26 +9,26 @@ public abstract class SView : MonoBehaviour, ISView
 
 
     #region IView : Initialize | OnInitialize
-    public void Initialize()
+    public void Init()
     {
         if (IsInitialized)
         {
             return;
         }
         IsInitialized = true;
-        OnInitialized();
+        OnInit();
     }
-    protected abstract void OnInitialized();
+    protected abstract void OnInit();
 
     #endregion IView : Initialize | OnInitialize
 
     #region IView : DeInitialize | OnDeInitialize
-    public void DeInitialize()
+    public void DeInit()
     {
         IsInitialized = false;
-        OnDeInitialized();
+        OnDeInit();
     }
-    protected abstract void OnDeInitialized();
+    protected abstract void OnDeInit();
     #endregion IView : DeInitialize | OnDeInitialize
 
     #region IView : Show | OnShow
