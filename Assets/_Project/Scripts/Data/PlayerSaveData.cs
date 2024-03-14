@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Data
 {
     [Serializable]
-    public class PlayerData : ISaveData
+    public class PlayerSaveData : ISaveData
     {
         [field: SerializeField] public string Id { get; set; }
 

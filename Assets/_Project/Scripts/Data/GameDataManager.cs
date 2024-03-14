@@ -1,9 +1,8 @@
-﻿using Player.Weapons;
-using Service_Locator;
-using System;
-using UnityEngine;
+﻿using Assets._Project.Scripts.UI.Inventory;
 using SaveLoad;
-using Player;
+using System;
+using UIScripts.Level;
+using UnityEngine;
 
 namespace Data
 {
@@ -21,12 +20,10 @@ namespace Data
 
         public GameData GameData => _gameData;
 
-        public void Awake()
+        public void Construct()
         {
             _saveSystem = new SaveSystem(new JsonSerializer());
             Load();
-
-            ServiceProvider.Instance.Register<IGameDataManager>(this);
         }
         public void Save()
         {
@@ -41,7 +38,6 @@ namespace Data
             }
             if (_saveSystem.TryLoad<GameData>(_gameData.name, out var data))
             {
-                Debug.Log("Try Load Success");
                 _gameData = data;
             }
 
@@ -51,18 +47,11 @@ namespace Data
     [Serializable]
     public class GameData : GameDataBase
     {
-        [SerializeField] private PlayerData playerData;
-
-        public PlayerData PlayerData
-        {
-            get
-            {
-                if (playerData == null)
-                {
-                    playerData = new PlayerData();
-                }
-                return playerData;
-            }
-        }
+        [SerializeField] private PlayerSaveData _playerData;
+        [SerializeField] private InventorySaveData _inventorySaveData;
+        [SerializeField] private LevelSaveData _levelSaveData;
+        public PlayerSaveData PlayerData => _playerData ??= new PlayerSaveData();
+        public InventorySaveData InventoryData => _inventorySaveData ??= new InventorySaveData();
+        public LevelSaveData LevelData => _levelSaveData ??= new LevelSaveData();
     }
 }
