@@ -19,6 +19,7 @@ namespace Player.Weapons
         {
             foreach (var weapon in _weapons)
             {
+                weapon.Construct();
                 _weaponsMap.Add(weapon.WeaponType, weapon);
             }
         }

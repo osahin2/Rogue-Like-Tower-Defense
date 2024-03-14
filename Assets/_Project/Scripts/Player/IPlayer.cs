@@ -2,7 +2,7 @@
 
 namespace Player
 {
-    public interface IPlayer
+    public interface IPlayer : IHit
     {
         public Transform PlayerPosition { get; }
     }

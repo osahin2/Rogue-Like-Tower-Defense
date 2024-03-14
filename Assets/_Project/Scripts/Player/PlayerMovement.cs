@@ -10,15 +10,15 @@ namespace Player
         private IInputSystem _input;
         private MoveSettings _settings;
 
-        private bool _isMovementActive;
-        private float _targetAngle;
-        private Tween _rotateTween;
-
+        private Vector2 Direction => new(_input.Horizontal, _input.Vertical);
         private float GetDampen => 1.0f - Mathf.Exp(-_settings.DampenFactor * Time.deltaTime);
         private Transform MoveObject => _settings.MoveObject;
         private bool CheckDeadZone => Mathf.Abs(_input.Horizontal) <= _settings.JoystickDeadZone &&
             Mathf.Abs(_input.Vertical) <= _settings.JoystickDeadZone;
 
+        private bool _isMovementActive;
+        private float _targetAngle;
+        private Tween _rotateTween;
         public PlayerMovement(IInputSystem input, MoveSettings settings)
         {
             _input = input;
@@ -40,8 +40,7 @@ namespace Player
             if (!_isMovementActive || CheckDeadZone)
                 return;
 
-            var direction = new Vector3(_input.Horizontal, _input.Vertical, 0f);
-            _targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            _targetAngle = Mathf.Atan2(Direction.y, Direction.x) * Mathf.Rad2Deg;
             var targetRot = Quaternion.Euler(0f, 0f, _targetAngle);
             MoveObject.rotation = Quaternion.Slerp(MoveObject.rotation, targetRot, GetDampen);
         }
