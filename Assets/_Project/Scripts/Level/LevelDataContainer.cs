@@ -1,5 +1,6 @@
 using Rogue_Enemy;
 using System.Collections.Generic;
+using UIScripts.Level;
 using UnityEngine;
 
 namespace Rogue_LevelData
@@ -10,6 +11,8 @@ namespace Rogue_LevelData
         [SerializeField] private MapType _mapType;
         [SerializeField] private List<LevelDataSO> _levelDatas = new();
         [SerializeField] private float _waveDuration;
+
+        public int LevelDataCount => _levelDatas.Count;
 
         private readonly Dictionary<int, LevelData> _levelsMap = new();
 
