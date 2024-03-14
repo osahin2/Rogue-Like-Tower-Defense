@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameObjectExtension
+namespace Extension
 {
     public static class GameObjectExtensions
     {
