@@ -1,3 +1,3 @@
 # Rogue-Like Tower Defense
 
-![Start](https://ibb.co/ZmZS5D0)
+![](https://ibb.co/ZmZS5D0)
