@@ -1,7 +1,7 @@
-using GameObjectExtension;
 using Player;
 using UnityEditor;
 using UnityEngine;
+using Extension;
 
 namespace Rogue_Enemy.EditorScripts
 {
