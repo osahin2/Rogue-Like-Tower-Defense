@@ -1,7 +1,6 @@
-﻿using Assets._Project.Scripts.UI.Inventory;
-using SaveLoad;
+﻿using SaveLoad;
+using Service_Locator;
 using System;
-using UIScripts.Level;
 using UnityEngine;
 
 namespace Data
@@ -15,6 +14,7 @@ namespace Data
     public class GameDataManager : MonoBehaviour, IGameDataManager
     {
         [SerializeField] private GameData _gameData;
+        [SerializeField] private InventoryDatabase _inventoryData;
 
         private ISaveSystem _saveSystem;
 
@@ -24,6 +24,13 @@ namespace Data
         {
             _saveSystem = new SaveSystem(new JsonSerializer());
             Load();
+            ConstructData();
+
+            ServiceProvider.Instance.Register<IInventoryData>(_inventoryData);
+        }
+        private void ConstructData()
+        {
+            _inventoryData.Construct();
         }
         public void Save()
         {
