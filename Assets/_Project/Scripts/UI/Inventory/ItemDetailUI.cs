@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,13 +11,16 @@ namespace Assets._Project.Scripts.UI.Inventory
         public event Action OnCloseClickEvent;
         public event Action OnItemEquipEvent;
 
-        [SerializeField] private TextMeshProUGUI _itemDetailText;
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _itemEquipButton;
+        [SerializeField] private List<ItemPropertyUI> _itemPropertyPool = new();
+        [SerializeField] private Transform _propertyItemParent;
+        [SerializeField] private Image _itemImage;
+        [SerializeField] private TextMeshProUGUI _itemNameText;
 
         public void Show(InventoryItemConfig config)
         {
-            SetItemDetailText(config);
+            SetItemDetails(config);
 
             gameObject.SetActive(true);
 
@@ -25,24 +29,45 @@ namespace Assets._Project.Scripts.UI.Inventory
         public void Hide()
         {
             RemoveEvents();
-
+            CloseProperties();
             gameObject.SetActive(false);
         }
 
-        private void SetItemDetailText(InventoryItemConfig config)
+        private void SetItemDetails(InventoryItemConfig config)
         {
-            var statText = "";
-            if (config.Stats.Count > 0)
+            SetImage();
+            SetProperties();
+            SetItemName();
+
+            return;
+
+            void SetItemName()
             {
-                foreach (var stat in config.Stats)
+                _itemNameText.text = config.ItemName;
+            }
+            void SetProperties()
+            {
+                for (int i = 0; i < config.Stats.Count; i++)
                 {
-                    statText += stat.Key + stat.Value + "\n";
+                    var item = config.Stats[i];
+                    var propertyUI = _itemPropertyPool[i];
+                    propertyUI.Init(item);
                 }
             }
-            var itemDetailText = $"<b>{config.name}<b>\n\n<b>{statText}</b>";
-            _itemDetailText.text = itemDetailText;
+            void SetImage()
+            {
+                _itemImage.sprite = config.SpriteSettings.Sprite;
+                _itemImage.rectTransform.sizeDelta =
+                    new Vector2(config.SpriteSettings.width, config.SpriteSettings.height);
+            }
         }
-
+        private void CloseProperties()
+        {
+            foreach (var property in _itemPropertyPool)
+            {
+                property.DeInit();
+            }
+        }
         private void AddEvents()
         {
             _closeButton.onClick.AddListener(() =>

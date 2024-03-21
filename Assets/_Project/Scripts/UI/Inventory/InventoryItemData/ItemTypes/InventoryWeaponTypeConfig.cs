@@ -8,17 +8,24 @@ namespace Assets._Project.Scripts.UI.Inventory
     public class InventoryWeaponTypeConfig : InventoryItemConfig
     {
         [SerializeField] private WeaponConfig _weapon;
-
+        [SerializeField] private List<ItemProperty> _itemProperties = new();
         public override void Construct()
         {
             ConfigTypeAsEnum = (int) _weapon.WeaponType;
-            Icon = _weapon.Icon;
-            Stats = new Dictionary<string, string>()
-                {
-                    {"Damage", $"{_weapon.DefaultDamage}" },
-                    {"Range", $"{_weapon.DefaultRange}"},
-                    {"Fire Rate", $"{_weapon.DefaultFireRate}" }
-                };
+            ItemName = _weapon.WeaponType.ToString();
+            _spriteSettings.Sprite = _weapon.Icon;
+            foreach (var item in _itemProperties)
+            {
+                item.Value = GetValue(item.Type);
+                Stats.Add(item);
+            }
         }
+
+        private string GetValue(PropertyType type) => type switch
+        {
+            PropertyType.Damage => _weapon.DefaultDamage.ToString(),
+            PropertyType.FireRate => _weapon.DefaultFireRate.ToString(),
+            PropertyType.Range => _weapon.DefaultRange.ToString()
+        };
     }
 }

@@ -10,6 +10,7 @@ namespace Assets._Project.Scripts.UI.Inventory
         public InventoryItemConfig ItemConfig;
         public string Name;
         public string ItemType;
+        public bool IsEquipped;
 
         public InventoryItemData(InventoryItemConfig itemConfig)
         {

@@ -1,5 +1,4 @@
-﻿using Assets._Project.Scripts.UI.Menu;
-using Data;
+﻿using Data;
 using Player.Weapons;
 using SaveLoad;
 using Service_Locator;
@@ -20,6 +19,7 @@ namespace Assets._Project.Scripts.UI.Inventory
         [SerializeField] private InventoryView _inventoryView;
         [SerializeField] private SaveableData<InventorySaveData> _inventorySaveData;
         [SerializeField] private List<InventoryItemConfig> _startingItems = new();
+        [SerializeField] private List<InventoryItemConfig> _defaultEquippedItems = new();
 
         private InventoryPresenter _presenter;
 
@@ -27,22 +27,26 @@ namespace Assets._Project.Scripts.UI.Inventory
         private PlayerSaveData PlayerData => _gameDataManager.GameData.PlayerData;
 
         private IGameDataManager _gameDataManager;
+        private IInventoryData _inventoryDatabase;
 
         public override void Construct()
         {
-            ServiceProvider.Instance.Get(out _gameDataManager);
+            ServiceProvider.Instance.
+                Get(out _gameDataManager).
+                Get(out _inventoryDatabase);
 
             _presenter = new InventoryPresenter.Builder(_inventoryView)
                 .WithStartingItems(_startingItems)
+                .WithEquippedItems(_defaultEquippedItems)
                 .Build();
 
             BindSaveData();
 
+            _presenter.Init();
         }
 
         public override void Show()
         {
-            _presenter.Init();
             _presenter.Show();
             AddEvents();
         }
@@ -51,7 +55,6 @@ namespace Assets._Project.Scripts.UI.Inventory
         {
             RemoveEvents();
             _presenter.Hide();
-            _presenter.DeInit();
         }
         private void OnItemEquipped(InventoryItemConfig config)
         {
@@ -66,7 +69,7 @@ namespace Assets._Project.Scripts.UI.Inventory
         private void BindSaveData()
         {
             _inventorySaveData.Bind(_gameDataManager.GameData.InventoryData);
-            _presenter.Bind(InventoryData);
+            _presenter.Bind(InventoryData, _inventoryDatabase);
         }
 
         private void AddEvents()

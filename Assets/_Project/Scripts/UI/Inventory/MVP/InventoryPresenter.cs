@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 
 namespace Assets._Project.Scripts.UI.Inventory
@@ -10,10 +11,15 @@ namespace Assets._Project.Scripts.UI.Inventory
         private InventoryItemConfig _currentClickedConfig;
         private InventoryPresenter(InventoryModel model, InventoryView view) : base(model, view)
         {
+            
         }
 
         protected override void OnInit()
         {
+            //foreach (var item in _model.GetEquippedItems())
+            //{
+            //    _view.EquipItem(item.ItemConfig);
+            //}
         }
         protected override void OnDeInit()
         {
@@ -21,16 +27,16 @@ namespace Assets._Project.Scripts.UI.Inventory
         }
         protected override void OnShow()
         {
-
+            
         }
         protected override void OnHide()
         {
 
         }
 
-        public void Bind(InventorySaveData saveData)
+        public void Bind(InventorySaveData saveData, IInventoryData inventoryDatabase)
         {
-            _model.Bind(saveData);
+            _model.Bind(saveData, inventoryDatabase);
         }
         private void OnItemClicked(InventoryItemConfig config)
         {
@@ -45,6 +51,8 @@ namespace Assets._Project.Scripts.UI.Inventory
 
         private void OnItemEquipped()
         {
+            _model.SetItemEquipped(_currentClickedConfig.Id);
+            _view.EquipItem(_currentClickedConfig);
             OnItemEquipEvent?.Invoke(_currentClickedConfig);
         }
         protected override void OnAddEvents()
@@ -66,6 +74,7 @@ namespace Assets._Project.Scripts.UI.Inventory
         {
             private InventoryView _view;
             private List<InventoryItemConfig> _items;
+            private List<InventoryItemConfig> _equippedItems;
 
             public Builder(InventoryView view)
             {
@@ -77,14 +86,29 @@ namespace Assets._Project.Scripts.UI.Inventory
                 return this;
 
             }
+            public Builder WithEquippedItems(List<InventoryItemConfig> items)
+            {
+                _equippedItems = items;
+                return this;
+            }
             public InventoryPresenter Build()
             {
                 var model = _items != null ? new InventoryModel(_items) : new InventoryModel();
+
+                if (_equippedItems != null)
+                {
+                    foreach (var item in _equippedItems)
+                    {
+                        item.IsEquipped = true;
+                    }
+                }
 
                 foreach (var item in model.Items)
                 {
                     _view.SetInventoryItems(item.ItemConfig);
                 }
+
+                _view.SetItemSlotDictionary();
 
                 return new InventoryPresenter(model, _view);
             }

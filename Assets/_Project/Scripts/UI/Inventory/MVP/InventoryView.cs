@@ -6,10 +6,15 @@ namespace Assets._Project.Scripts.UI.Inventory
 {
     public class InventoryView : SView
     {
+        [SerializeField] private InventoryItemUI _inventoryItemPrefab;
         [SerializeField] private Transform _inventoryItemsParent;
         [SerializeField] private ItemDetailUI _itemDetailUI;
+        [SerializeField] private List<ItemEquipSlot> _itemSlots;
 
         public List<InventoryItemUI> InventoryItems { get; } = new();
+
+        private readonly Dictionary<InventoryItemType, ItemEquipSlot> _itemEquipSlots = new();
+
         protected override void OnInit()
         {
 
@@ -29,11 +34,30 @@ namespace Assets._Project.Scripts.UI.Inventory
 
         public void SetInventoryItems(InventoryItemConfig config)
         {
-            var inventoryUI = config.CreateItemUI(_inventoryItemsParent);
-
+            var inventoryUI = Instantiate(_inventoryItemPrefab, _inventoryItemsParent);
+            inventoryUI.Init(config);
             InventoryItems.Add(inventoryUI);
+
+        }
+        public void SetItemSlotDictionary()
+        {
+            foreach (var slot in _itemSlots)
+            {
+                _itemEquipSlots.Add(slot.Type, slot);
+            }
         }
 
+        public void EquipItem(InventoryItemConfig config)
+        {
+            if (!_itemEquipSlots.TryGetValue(config.ItemType, out var slot))
+            {
+                Debug.LogError("InventoryView: Item Equip Slot cannot find in Dictionary");
+                return;
+            }
+
+            slot.SetItem(config);
+
+        }
         public void ShowItemDetail(InventoryItemConfig config)
         {
             _itemDetailUI.Show(config);
@@ -74,13 +98,13 @@ namespace Assets._Project.Scripts.UI.Inventory
         }
         protected override void OnAddEvents()
         {
-            
+
         }
 
 
         protected override void OnRemoveEvents()
         {
-            
+
         }
 
     }

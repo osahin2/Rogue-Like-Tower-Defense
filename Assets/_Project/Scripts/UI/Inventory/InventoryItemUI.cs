@@ -19,13 +19,16 @@ namespace Assets._Project.Scripts.UI.Inventory
         public void Init(InventoryItemConfig config)
         {
             _itemConfig = config;
+            _itemType = config.ItemType;
             SetItemIcon();
 
             _button.onClick.AddListener(OnItemClicked);
         }
         private void SetItemIcon()
         {
-            _icon.sprite = _itemConfig.Icon;
+            _icon.sprite = _itemConfig.SpriteSettings.Sprite;
+            _icon.rectTransform.sizeDelta = 
+                new Vector2(_itemConfig.SpriteSettings.width, _itemConfig.SpriteSettings.height);
         }
         private void OnItemClicked()
         {
