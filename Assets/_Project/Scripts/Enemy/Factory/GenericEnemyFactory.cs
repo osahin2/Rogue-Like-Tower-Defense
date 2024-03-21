@@ -20,21 +20,20 @@ namespace Rogue_Enemy.Factory
             _poolSpawnParent = poolSpawnParent;
             _pooler = new Pooler<Enemy>(_enemy, CreateEnemy, OnGet, OnFree, OnDestroyed, OnInitialSpawned);
         }
-        public Enemy GetEnemy()
+        public IEnemy GetEnemy()
         {
             return _pooler.GetPooled();
         }
-
-        public void Free(Enemy enemy)
-        {
-            _pooler.Free(enemy);
-        }
-
         private Enemy CreateEnemy()
         {
             var enemy = Instantiate(Enemy, _poolSpawnParent);
-            enemy.Construct();
+            enemy.Construct(SetFree);
             return enemy;
+        }
+
+        private void SetFree(Enemy enemy)
+        {
+            _pooler.Free(enemy);
         }
 
         private void OnFree(Enemy enemy)

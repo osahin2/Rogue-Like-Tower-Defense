@@ -5,13 +5,15 @@ using Player.Weapons;
 using System;
 using UnityEngine;
 using SpriteFlip;
+using Pool;
 
 namespace Rogue_Enemy
 {
     [ComponentDependency(typeof(IEnemyMovement))]
     public class Enemy : MonoBehaviour, IEnemy
     {
-        public event Action<Enemy> OnDead;
+        public event Action<IEnemy> OnDead;
+        private Action<Enemy> SetFreeAction;
 
         [Header("Animation")]
         [SerializeField] private AnimatorController _animatorController;
@@ -32,16 +34,18 @@ namespace Rogue_Enemy
         private ICountdown _attackTimer;
         private SpriteFlipper _spriteFlipper;
         private NonAllocRaycaster _nonAllocRaycaster;
+
         public EnemyType EnemyType => _enemyType;
         private Vector3 DirectionToTarget => _target - transform.position;
 
-        private bool _dead;
         private Vector3 _target;
         private RaycastHit2D[] _attackRayResults = new RaycastHit2D[1];
         private int _playerLayer;
 
-        public void Construct()
+        public void Construct(Action<Enemy> setFree)
         {
+            SetFreeAction = setFree;
+
             _enemyMovement = GetComponent<IEnemyMovement>();
             _enemyMovement.Construct();
 
@@ -102,6 +106,7 @@ namespace Rogue_Enemy
             _enemyMovement.ResetMovement();
 
             OnDead?.Invoke(this);
+            SetFreeAction(this);
         }
         public void PoolOnFree()
         {

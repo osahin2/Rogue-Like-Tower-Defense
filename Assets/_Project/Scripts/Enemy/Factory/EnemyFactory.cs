@@ -27,20 +27,13 @@ namespace Rogue_Enemy.Factory
             }
         }
 
-        public Enemy Get(EnemyType enemyType) => CreateEnemy(enemyType);
-        public void Release(Enemy enemy) => FreeEnemy(enemy);
+        public IEnemy Get(EnemyType enemyType) => CreateEnemy(enemyType);
 
-        private Enemy CreateEnemy(EnemyType enemyType)
+        private IEnemy CreateEnemy(EnemyType enemyType)
         {
             var factory = GetEnemyFactoryFromDictionary(enemyType);
             var enemy = factory.GetEnemy();
             return enemy;
-        }
-
-        private void FreeEnemy(Enemy enemy)
-        {
-            var factory = GetEnemyFactoryFromDictionary(enemy.EnemyType);
-            factory.Free(enemy);
         }
 
         private IGenericEnemyFactory GetEnemyFactoryFromDictionary(EnemyType enemyType)

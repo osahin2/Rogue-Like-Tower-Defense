@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
+using Data;
 using Player;
 using Rogue_Enemy.Factory;
 using Rogue_LevelData;
+using Service_Locator;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,24 +15,25 @@ namespace Rogue_Enemy
         [SerializeField] private List<GenericEnemyFactory> _enemyFactories = new();
         [Header("Spawn Settings")]
         [SerializeField] private float _spawnRadius;
-        [Tooltip("Just In Case.")]
-        [Header("Level Data Container")]
         [SerializeField] private LevelDataContainer _levelDataContainer;
 
         private IEnemyFactory _enemyFactory;
         private IPlayer _player;
         private LevelData _currentLevelData;
+        private IGameDataManager _gameData;
 
         public IEnemyFactory EnemyFactory => _enemyFactory ??= new EnemyFactory(_enemyFactories);
         public int SpawnedEnemyCount => _enemies.Count;
         public float SpawnRadius => _spawnRadius;
+        private LevelSaveData LevelData => _gameData.GameData.LevelData;
 
-        private List<Enemy> _enemies = new();
+        private List<IEnemy> _enemies = new();
         private bool _isActive;
 
         public void Construct(IPlayer player)
         {
             _player = player;
+            ServiceProvider.Instance.Get(out _gameData);
 
             _enemyFactory ??= new EnemyFactory(_enemyFactories);
             _enemyFactory.Init();
@@ -102,11 +105,10 @@ namespace Rogue_Enemy
             }
         }
 
-        private void OnEnemyDead(Enemy enemy)
+        private void OnEnemyDead(IEnemy enemy)
         {
             enemy.OnDead -= OnEnemyDead;
             _enemies.Remove(enemy);
-            _enemyFactory.Release(enemy);
         }
         private Vector3 RandomPointOnCircleEdge()
         {

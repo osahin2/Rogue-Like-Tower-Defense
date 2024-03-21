@@ -6,7 +6,6 @@ namespace Rogue_Enemy.Factory
     {
         public EnemyType EnemyType { get;}
         void Construct(Transform poolSpawnParent);
-        Enemy GetEnemy();
-        void Free(Enemy enemy);
+        IEnemy GetEnemy();
     }
 }

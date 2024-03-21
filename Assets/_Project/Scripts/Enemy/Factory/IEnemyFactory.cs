@@ -3,8 +3,7 @@
     public interface IEnemyFactory
     {
         void Init();
-        Enemy Get(EnemyType enemy);
-        void Release(Enemy enemy);
+        IEnemy Get(EnemyType enemy);
 
     }
 }
