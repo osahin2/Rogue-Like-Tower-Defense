@@ -6,12 +6,6 @@ using UnityEngine;
 
 namespace App
 {
-    public enum GameState
-    {
-        Play,
-        MainMenu,
-        Pause
-    }
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private GameContext _gameContext;
@@ -55,9 +49,14 @@ namespace App
 
         private void OnApplicationPause(bool pause)
         {
-            _gameContext.GameDataManager.Save();
+            //_gameContext.GameDataManager.Save();
         }
         private void OnApplicationQuit()
+        {
+            //_gameContext.GameDataManager.Save();
+        }
+
+        private void OnDestroy()
         {
             _gameContext.GameDataManager.Save();
         }
