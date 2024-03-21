@@ -7,6 +7,7 @@ using UnityEngine;
 using HealthSystem;
 using SpriteFlip;
 using UnityEngine.EventSystems;
+using Player.Spells;
 
 namespace Player
 {
@@ -26,7 +27,7 @@ namespace Player
         [SerializeField] private SpriteRenderer _rightHand;
         [Header("Saveable Data")]
         [SerializeField] private SaveableData<PlayerSaveData> _playerData;
-        //[SerializeField] private SpellManager _spellController;
+        [SerializeField] private SpellManager _spellController;
 
         private PlayerMovement _playerMovement;
         private IInputSystem _input;
@@ -54,6 +55,7 @@ namespace Player
             _health = new Health(_maxHealth);
             _flashEffect = _bodySprite.GetComponent<IFlash>();
             _flashEffect?.Construct(_bodySprite, _defaultMat);
+            //_spellController.Construct();
 
             ConstructSpriteFlippers();
         }
@@ -71,6 +73,7 @@ namespace Player
         public void DeInit()
         {
             RemoveEvents();
+            _spellController.Dispose();
             _isPlayerActive = false;
             _currentWeapon = null;
         }
@@ -89,6 +92,10 @@ namespace Player
             _playerMovement.HandleMovement();
             _currentWeapon.UpdateWeapon();
             SetHandPositions();
+        }
+        public void AddSpell(SpellType spellType)
+        {
+            _spellController.AddSpell(spellType);
         }
         private void SetHandPositions()
         {

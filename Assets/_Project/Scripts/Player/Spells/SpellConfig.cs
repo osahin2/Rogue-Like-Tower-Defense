@@ -1,12 +1,10 @@
-﻿using GameObjectExtension;
+﻿using Extension;
 using Player.Upgrades;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player.Spells
 {
-    [CreateAssetMenu(fileName ="Spell Config", menuName ="Spells/Spell Config")]
+    [CreateAssetMenu(fileName = "Spell Config", menuName = "Spells/Spell Config")]
     public class SpellConfig : ScriptableObject
     {
         [SerializeField] private SpellType _spellType;
@@ -61,7 +59,7 @@ namespace Player.Spells
             {
                 return _cachedSpell;
             }
-            
+
             _cachedSpell = Instantiate(_spellPrefab, parent);
             return _cachedSpell;
         }

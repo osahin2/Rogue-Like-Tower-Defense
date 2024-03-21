@@ -1,5 +1,6 @@
 ﻿using Player.Upgrades;
 using Player.Weapons.Bullets;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player.Weapons
@@ -9,15 +10,16 @@ namespace Player.Weapons
     {
         [SerializeField] private WeaponType _type;
         [SerializeField] private Weapon _weaponPrefab;
+        [SerializeField] private Sprite _icon;
         [SerializeField] private BulletConfig _bulletConfig;
         [SerializeField] private UpgradeableAttribute<int> _damageAttributes;
         [SerializeField] private UpgradeableAttribute<float> _fireRateAttributes;
         [SerializeField] private UpgradeableAttribute<float> _rangeAttribute;
-        [SerializeField] private Sprite _icon;
 
         private IUpgrade<int> _damageUpgrade;
         private IUpgrade<float> _fireRateUpgrade;
         private IUpgrade<float> _rangeUpgrade;
+        private UpgradeHandler _upgradeHandler;
 
         public Weapon WeaponPrefab => _weaponPrefab;
         public BulletConfig BulletConfig => _bulletConfig;
@@ -30,6 +32,8 @@ namespace Player.Weapons
         public int DefaultDamage => _damageAttributes.Attributes[0];
         public float DefaultFireRate => _fireRateAttributes.Attributes[0];
         public float DefaultRange => _rangeAttribute.Attributes[0];
+
+        private List<IUpgrade> _upgrades = new();
 
         public void Construct()
         {
@@ -48,8 +52,13 @@ namespace Player.Weapons
                 UpgradeType.Weapon,
                 UpgradeAttributeType.Range);
 
+            _upgrades = new (){ _damageUpgrade, _fireRateUpgrade, _rangeUpgrade };
+            _upgradeHandler = new UpgradeHandler(_upgrades);
         }
-
+        public void UpgradeAttribute(UpgradeAttributeType type)
+        {
+            _upgradeHandler.UpgradeAttribute(type);
+        }
         public void ResetUpgrades()
         {
             _damageUpgrade.Reset();

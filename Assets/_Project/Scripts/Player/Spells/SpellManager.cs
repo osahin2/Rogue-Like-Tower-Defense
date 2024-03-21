@@ -14,7 +14,7 @@ namespace Player.Spells
 
         private List<ISpell> _activatedSpells = new();
         private bool AnyActivatedSpell => _activatedSpells.Count > 0;
-        public void Init()
+        public void Construct()
         {
             _spellFactory = new SpellFactory(_spellConfigs, transform);
         }

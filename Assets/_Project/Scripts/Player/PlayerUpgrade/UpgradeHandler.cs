@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 namespace Player.Upgrades
 {
-    public class UpgradeHandler<TUpgrade>
+    public class UpgradeHandler
     {
-        private List<IUpgrade<TUpgrade>> _upgrades = new();
+        private List<IUpgrade> _upgrades = new();
 
-        private readonly Dictionary<UpgradeAttributeType, IUpgrade<TUpgrade>> _upgradeDict = new();
-        public UpgradeHandler(List<IUpgrade<TUpgrade>> upgrades)
+        private readonly Dictionary<UpgradeAttributeType, IUpgrade> _upgradeDict = new();
+        public UpgradeHandler(List<IUpgrade> upgrades)
         {
             _upgrades = upgrades;
             SetDictionary();
@@ -19,21 +18,22 @@ namespace Player.Upgrades
                 _upgradeDict.Add(upgrade.AttributeType, upgrade);
             }
         }
-        private bool TryGetUpgrade(UpgradeAttributeType type, out IUpgrade<TUpgrade> upgrade)
+        public IUpgrade GetUpgrade(UpgradeAttributeType type)
         {
-            if (_upgradeDict.TryGetValue(type, out upgrade))
+            if (!_upgradeDict.TryGetValue(type, out var upgrade))
             {
-                return true;
+                throw new KeyNotFoundException($"{type} UpgradeController: {type} Upgrade Not Found In Dictionary");
             }
-            return false;
+            return upgrade;
         }
-        public TUpgrade GetAttribute(UpgradeAttributeType type)
+
+        public void UpgradeAttribute(UpgradeAttributeType type)
         {
-            if (TryGetUpgrade(type, out var upgrade))
+            if (!_upgradeDict.TryGetValue(type, out var upgrade))
             {
-                return upgrade.Current;
+                throw new KeyNotFoundException($"{type} UpgradeController: {type} Upgrade Not Found In Dictionary");
             }
-            throw new KeyNotFoundException($"{type} UpgradeController: {type} Upgrade Not Found In Dictionary");
+            upgrade.SetLevel(upgrade.Level + 1);
         }
     }
 }
