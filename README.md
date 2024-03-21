@@ -1,3 +1,3 @@
 # Rogue-Like Tower Defense
 
-![](/Images/GameplayGif.gif)
+![Start](/Images/GameplayGif.gif)
