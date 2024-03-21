@@ -3,13 +3,9 @@ using Rogue_LevelData;
 using SaveLoad;
 using Service_Locator;
 using UnityEngine;
+
 namespace UIScripts.Level
 {
-    public class LevelSaveData : ISaveData
-    {
-        [field: SerializeField] public string Id { get; set; }
-        public LevelData LevelData;
-    }
     public class LevelSelection : MenuPanel
     {
         [SerializeField] private LevelUIView _levelView;

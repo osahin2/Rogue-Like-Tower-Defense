@@ -1,4 +1,5 @@
-﻿using Lib;
+﻿using Data;
+using Lib;
 using Rogue_LevelData;
 namespace UIScripts.Level
 {

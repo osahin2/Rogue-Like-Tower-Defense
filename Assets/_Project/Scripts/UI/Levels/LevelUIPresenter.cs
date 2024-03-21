@@ -1,4 +1,5 @@
-﻿using Rogue_LevelData;
+﻿using Data;
+using Rogue_LevelData;
 namespace UIScripts.Level
 {
     public class LevelUIPresenter : SPresenter<LevelUIModel, LevelUIView>
@@ -56,6 +57,7 @@ namespace UIScripts.Level
 
             public Builder WithLevelDatas(LevelDataContainer container)
             {
+                container.Construct();
                 _model.SetLevelDataContainer(container);
                 return this;
             }
