@@ -1,7 +1,7 @@
-﻿using Assets._Project.Scripts.UI.Menu;
-using EventBusSystem;
+﻿using EventBusSystem;
 using MenuEvent;
 using System.Collections.Generic;
+using UIScripts.Menu;
 using UnityEngine;
 
 namespace UIScripts
@@ -22,13 +22,14 @@ namespace UIScripts
         }
         public void Show()
         {
-            _menu.Show();
             AddEvents();
+            _menu.Show();
         }
         public void Hide()
         {
             RemoveEvents();
             _menu.Hide();
+            _currentPanel.Hide();
         }
         private void SetMenuPanelDict()
         {

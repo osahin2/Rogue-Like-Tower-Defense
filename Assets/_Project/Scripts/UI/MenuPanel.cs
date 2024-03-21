@@ -1,4 +1,4 @@
-﻿using Assets._Project.Scripts.UI.Menu;
+﻿using UIScripts.Menu;
 using UnityEngine;
 
 namespace UIScripts
